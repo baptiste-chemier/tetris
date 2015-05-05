@@ -5,18 +5,20 @@
 
 package Vue;
 
+import Controleur.*;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 /**
  *
  * @author frederic
  */
-public class Case extends JPanel {
-
-    public Case() {
+public class VueCase extends JPanel {
+    
+    public VueCase() {
         super();
         
         setBackground(Color.white);
@@ -24,19 +26,13 @@ public class Case extends JPanel {
         addMouseListener(new MouseAdapter() {
         
             @Override
-            public void mouseEntered(MouseEvent arg0) {
-                super.mouseClicked(arg0);
-                setBackground(Color.BLACK);
+            public void mouseClicked(MouseEvent event) {
+                if (SwingUtilities.isRightMouseButton(event))
+                {
+                    super.mouseClicked(event);
+                    setBackground(Color.red);
+                }
             }
-
-            @Override
-            public void mouseExited(MouseEvent arg0) {
-                super.mouseExited(arg0);
-                setBackground(Color.red);
-            }
-            
-            
-            
         });
         
     }

@@ -5,7 +5,7 @@
  */
 package demineur;
 
-import Vue.Vue;
+import Vue.VueVue;
 
 /**
  *
@@ -19,7 +19,7 @@ public class Demineur {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        Vue fenetre = new Vue();
+        VueVue fenetre = new VueVue();
         fenetre.setVisible(true);//On la rend visible
     }
     

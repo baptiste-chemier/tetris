@@ -5,33 +5,30 @@
 
 package Vue;
 
+import Modele.*;
 import java.awt.Color;
 import java.awt.GridLayout;
-
-import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.BorderFactory;
-
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JMenu;
-
 import javax.swing.border.Border;
-import javax.swing.plaf.basic.BasicComboBoxUI.ItemHandler;
 
 /**
  *
  * @author frederic
  */
-public class Vue extends JFrame {
+public class VueVue extends JFrame {
 
-    public Vue() {
+    ModeleGrille modeleGrille;
+    
+    public VueVue() {
         super();
-        
         build();
         
         addWindowListener(new WindowAdapter() {
@@ -41,49 +38,34 @@ public class Vue extends JFrame {
                 System.exit(0);
             }
         });
-        
-        
     }
     
     public void build() {
-        
-
-        //JMenu jm = new JMenu();
         JMenuBar jm = new JMenuBar();
-        
         JMenu m = new JMenu("Jeu");
-        
         JMenuItem mi = new JMenuItem("Partie");
+        modeleGrille = new ModeleGrille();
         
-        //ItemListener i = new Item
-        
-        m.add(mi);
-        
+        m.add(mi);   
         jm.add(m);
-        
-       
-        
         setJMenuBar(jm);
-        
         
         setTitle("Ma première fenêtre");
         setSize(400, 400);
-        JComponent pan = new JPanel (new GridLayout(10,10));
+        JComponent pan = new JPanel (new GridLayout(modeleGrille.getNbLigne(), modeleGrille.getNbColonne()));
         Border blackline = BorderFactory.createLineBorder(Color.black,1);
 
-        for(int i = 0; i<100;i++){
-            JComponent ptest = new Case();
-            ptest.setBorder(blackline);
-            pan.add(ptest);
+        for(int i = 0; i < modeleGrille.getNbLigne() ;i++){
+            for(int j = 0; j < modeleGrille.getNbColonne(); j++)
+            {
+                JComponent ptest = new VueCase();
+                ptest.setBorder(blackline);
+                pan.add(ptest);  
+            }
         }
+        
+        
         pan.setBorder(blackline);
         add(pan);
-        //setContentPane(pan);
-
-        
-        
-        
     }
-
-    
 }
