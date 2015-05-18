@@ -10,6 +10,8 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -38,6 +40,13 @@ public class VueVue extends JFrame {
                 System.exit(0);
             }
         });
+        
+        modeleGrille.addObserver(new Observer(){
+            @Override
+            public void update(Observable o, Object arg) {
+                build();
+            }
+        });
     }
     
     public void build() {
@@ -51,7 +60,7 @@ public class VueVue extends JFrame {
         setJMenuBar(jm);
         
         setTitle("Ma première fenêtre");
-        setSize(400, 400);
+        setSize(450, 450);
         JComponent pan = new JPanel (new GridLayout(modeleGrille.getNbLigne(), modeleGrille.getNbColonne()));
         Border blackline = BorderFactory.createLineBorder(Color.black,1);
 
@@ -60,6 +69,7 @@ public class VueVue extends JFrame {
             {
                 JComponent ptest = new VueCase();
                 ptest.setBorder(blackline);
+                ptest.setSize(30, 30);
                 pan.add(ptest);  
             }
         }
@@ -67,5 +77,6 @@ public class VueVue extends JFrame {
         
         pan.setBorder(blackline);
         add(pan);
+
     }
 }

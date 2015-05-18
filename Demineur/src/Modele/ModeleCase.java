@@ -11,13 +11,13 @@ package Modele;
  */
 public class ModeleCase {
     
-    private boolean drapeau;
+    private int drapeau;
 
-    public boolean isDrapeau() {
+    public int isDrapeau() {
         return drapeau;
     }
 
-    public void setDrapeau(boolean drapeau) {
+    public void setDrapeau(int drapeau) {
         this.drapeau = drapeau;
     }    
     

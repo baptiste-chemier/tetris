@@ -49,15 +49,27 @@ public class ModeleGrille extends Observable{
             for(int j = 0; j <= nbColonne - 1; j++)
             {
                 tabCases[i][j] = new ModeleCase();
-                tabCases[i][j].setDrapeau(false);
+                tabCases[i][j].setDrapeau(0);
             }
         }
     }
     
     public void updtateGrille(int x, int y)
     {
-        tabCases[x][y].setDrapeau(true);
+        System.out.println("Ca passe");
+        tabCases[x][y].setDrapeau(1);
+        afficheTestGrille();
         setChanged();
         notifyObservers();
     }
+    
+    public void afficheTestGrille(){
+        for(int i=0;i<nbColonne;i++){
+            for(int j=0;j<nbLigne;j++){
+                System.out.print(tabCases[i][j].isDrapeau());
+            }
+            System.out.println("\n");
+        }
+    }
+    
 }
