@@ -5,8 +5,6 @@
 
 package Vue;
 
-import java.awt.Color;
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 /**
