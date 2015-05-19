@@ -56,6 +56,7 @@ public class ModeleGrille extends Observable{
                 tabCases[i][j].setMine(0);
             }
         }
+        remplirMine();
     }
     
     public void updtateGrille(int x, int y)
@@ -92,8 +93,8 @@ public class ModeleGrille extends Observable{
     public int[] genererAleatoire()
     {
         Random r = new Random();
-        int x = r.nextInt(nbColonne + 1);
-        int y = r.nextInt(nbLigne + 1);
+        int x = r.nextInt(nbColonne );
+        int y = r.nextInt(nbLigne );
         
         int[] tabAleatoire = new int[]{x, y};
         
