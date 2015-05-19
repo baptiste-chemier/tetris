@@ -5,40 +5,19 @@
 
 package Vue;
 
-import Controleur.*;
-import Modele.ModeleGrille;
 import java.awt.Color;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 /**
  *
  * @author frederic
  */
-public class VueCase extends JPanel {
-    ModeleGrille m;
+public class VueCase extends JPanel {    
     
     public VueCase() {
-        super();
-        m = new ModeleGrille();
-        m.afficheTestGrille();
-        setBackground(Color.white);
-        
-        addMouseListener(new MouseAdapter() {
-        
-            @Override
-            public void mouseClicked(MouseEvent event) {
-                if (SwingUtilities.isRightMouseButton(event))
-                {
-                    super.mouseClicked(event);
-                    setBackground(Color.red);
-                    m.updtateGrille((event.getComponent().getX()-7)/28, (event.getComponent().getY()-7)/25);
-                }
-            }
-        });
-        
+        JComponent jc = new JPanel();
+        jc.setBackground(Color.white);
     }
     
 }
