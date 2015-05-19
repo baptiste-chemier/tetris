@@ -8,6 +8,7 @@ package Vue;
 import Modele.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -16,11 +17,8 @@ import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.BorderFactory;
-import static javax.swing.GroupLayout.Alignment.CENTER;
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -35,7 +33,7 @@ import javax.swing.border.Border;
 public class VueVue extends JFrame  implements Observer {
 
     ModeleGrille modeleGrille;
-    JComponent pan, infos,princ;
+    JComponent pan, infos, principal;
     Border blackline;
     private JPanel[][] tabCases;
     
@@ -57,31 +55,26 @@ public class VueVue extends JFrame  implements Observer {
     
     public void initComponent()
     {
+        principal = new JPanel();
         JMenuBar jm = new JMenuBar();
         JMenu m = new JMenu("Jeu");
         JMenuItem mi = new JMenuItem("Partie");
         modeleGrille = new ModeleGrille();
         tabCases = new JPanel[15][15];
         infos = new JPanel();
-        princ = new JPanel();
-        
-        BorderLayout bl = new BorderLayout(2,2);
-        infos.setLayout(bl);
-        princ.setLayout(bl);
-        
         m.add(mi);   
         jm.add(m);
-        setJMenuBar(jm);
-        
+        setJMenuBar(jm);        
         setTitle("Ma première fenêtre");
-        setSize(900, 900);
         pan = new JPanel (new GridLayout(modeleGrille.getNbLigne(), modeleGrille.getNbColonne()));
-        pan.setSize(100,100);
         blackline = BorderFactory.createLineBorder(Color.black,1);
-        infos = new JPanel ();
-        infos.setSize(600,600);
         
-        add(princ);
+        setSize(new Dimension(680, 520));
+        pan.setPreferredSize(new Dimension(450, 450));
+        infos.setPreferredSize(new Dimension(200, 450));
+        principal.add(pan, BorderLayout.WEST);
+        principal.add(infos, BorderLayout.EAST);
+        add(principal, BorderLayout.WEST);
     }
     
     public void build() {
@@ -115,10 +108,7 @@ public class VueVue extends JFrame  implements Observer {
             }
         }
         pan.setBorder(blackline);
-        
-        princ.add(pan);
-        princ.add(infos);
-
+        infos.setBorder(blackline);
     }
 
     @Override
