@@ -19,6 +19,14 @@ public class ModeleGrille extends Observable{
     private int nbColonne = 15;
     private int nbLigne = 15;
     private int nbMine = (int) ceil((nbColonne*nbLigne)/3);
+
+    public void setNbMine(int nbMine) {
+        this.nbMine = nbMine;
+    }
+
+    public int getNbMine() {
+        return nbMine;
+    }
     
     public int getNbColonne() {
         return nbColonne;
@@ -115,26 +123,27 @@ public class ModeleGrille extends Observable{
     }
     
     public void calcGrille(int x, int y){
+        int nbMinesVoisine;
         if(tabCases[x][y].isReturn()== 0){
             tabCases[x][y].setReturn(1);
-            nbMine = getNbVoisin(x, y);
-            System.out.println(nbMine);
+            nbMinesVoisine = getNbVoisin(x, y);
+            System.out.println(nbMinesVoisine);
         }
     }
     public int getNbVoisin(int x,int y){
-        int nbMines = 0;
+        int nbMinesVoisine = 0;
         
         for(int i=x-1;i<=x+1;i++){
             //for(int j=y-1;j<=y+1;j++){
             System.out.println("x: "+i+", Y: "+y);
             System.out.println("Mine ?:"+tabCases[i][y].hasMine());
                 if(i>=0 && i<this.nbMine && y>=0 && y<this.nbColonne){
-                    if(tabCases[i][y].hasMine() == 1) nbMines++;
+                    if(tabCases[i][y].hasMine() == 1) nbMinesVoisine++;
                 }
             //}
         }
 
-        return nbMines;
+        return nbMinesVoisine;
     }
     
 }

@@ -19,6 +19,7 @@ import java.util.Observer;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -32,10 +33,11 @@ import javax.swing.border.Border;
  */
 public class VueVue extends JFrame  implements Observer {
 
-    ModeleGrille modeleGrille;
-    JComponent pan, infos, principal;
-    Border blackline;
+    private ModeleGrille modeleGrille;
+    private JComponent pan, infos, principal;
+    private Border blackline;
     private JPanel[][] tabCases;
+    private JLabel nombreDeMines;
     
     public VueVue() {
         super();
@@ -69,12 +71,15 @@ public class VueVue extends JFrame  implements Observer {
         pan = new JPanel (new GridLayout(modeleGrille.getNbLigne(), modeleGrille.getNbColonne()));
         blackline = BorderFactory.createLineBorder(Color.black,1);
         
+        nombreDeMines = new JLabel(modeleGrille.getNbMine()+"");
+        
         setSize(new Dimension(680, 520));
         pan.setPreferredSize(new Dimension(450, 450));
         infos.setPreferredSize(new Dimension(200, 450));
+        infos.add(nombreDeMines,BorderLayout.NORTH);
         principal.add(pan, BorderLayout.WEST);
         principal.add(infos, BorderLayout.EAST);
-        add(principal, BorderLayout.WEST);
+        add(principal, BorderLayout.EAST);
     }
     
     public void build() {
@@ -99,6 +104,11 @@ public class VueVue extends JFrame  implements Observer {
                             modeleGrille.updtateGrille((event.getComponent().getY()-7)/25,(event.getComponent().getX()-7)/28);
                             
                         }
+                        if (SwingUtilities.isLeftMouseButton(event)) {
+                            super.mouseClicked(event);
+                            modeleGrille.calcGrille((event.getComponent().getX() - 7) / 28, (event.getComponent().getY() - 7) / 25);
+
+                        }
                     }
                 });
                 vc.setBorder(blackline);
@@ -122,6 +132,8 @@ public class VueVue extends JFrame  implements Observer {
                 }
             }
         }  
+        
+        nombreDeMines.setText(modeleGrille.getNbMine()+"");
         pan.setBorder(blackline);
         add(pan);
     }
