@@ -56,9 +56,8 @@ public class ModeleGrille extends Observable{
     
     public void updtateGrille(int x, int y)
     {
-        System.out.println("Ca passe");
         tabCases[x][y].setDrapeau(1);
-        afficheTestGrille();
+
         setChanged();
         notifyObservers();
     }

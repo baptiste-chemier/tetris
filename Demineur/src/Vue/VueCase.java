@@ -16,8 +16,9 @@ import javax.swing.JPanel;
 public class VueCase extends JPanel {    
     
     public VueCase() {
-        JComponent jc = new JPanel();
-        jc.setBackground(Color.white);
+        
+        
+        
     }
     
 }

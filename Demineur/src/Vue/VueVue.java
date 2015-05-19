@@ -81,9 +81,7 @@ public class VueVue extends JFrame  implements Observer {
                     public void mouseClicked(MouseEvent event) {
                         if (SwingUtilities.isRightMouseButton(event))
                         {
-                            System.out.println("Passe");
                             super.mouseClicked(event);
-                            setBackground(Color.CYAN);
                             modeleGrille.updtateGrille((event.getComponent().getY()-7)/25,(event.getComponent().getX()-7)/28);
                         }
                     }
