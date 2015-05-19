@@ -33,7 +33,7 @@ public class VueVue extends JFrame  implements Observer {
     ModeleGrille modeleGrille;
     JComponent pan;
     Border blackline;
-    private VueCase[][] tabCases;
+    private JPanel[][] tabCases;
     
     public VueVue() {
         super();
@@ -57,7 +57,7 @@ public class VueVue extends JFrame  implements Observer {
         JMenu m = new JMenu("Jeu");
         JMenuItem mi = new JMenuItem("Partie");
         modeleGrille = new ModeleGrille();
-        tabCases = new VueCase[15][15];
+        tabCases = new JPanel[15][15];
         
         m.add(mi);   
         jm.add(m);
@@ -74,15 +74,17 @@ public class VueVue extends JFrame  implements Observer {
         for(int i = 0; i < modeleGrille.getNbLigne() ;i++){
             for(int j = 0; j < modeleGrille.getNbColonne(); j++)
             {
-                VueCase vc = new VueCase();
-                vc.addMouseListener(new MouseAdapter() {
+               JPanel vc = new JPanel();
+               vc.setBackground(Color.white);
+               vc.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent event) {
                         if (SwingUtilities.isRightMouseButton(event))
                         {
+                            System.out.println("Passe");
                             super.mouseClicked(event);
                             setBackground(Color.CYAN);
-                            modeleGrille.updtateGrille((event.getComponent().getX()-7)/28, (event.getComponent().getY()-7)/25);
+                            modeleGrille.updtateGrille((event.getComponent().getY()-7)/25,(event.getComponent().getX()-7)/28);
                         }
                     }
                 });
@@ -99,28 +101,15 @@ public class VueVue extends JFrame  implements Observer {
 
     @Override
     public void update(Observable o, Object o1) {
+        
         for(int i = 0; i < modeleGrille.getNbLigne() ;i++){
             for(int j = 0; j < modeleGrille.getNbColonne(); j++)
             {
-                VueCase vc = new VueCase();
-                vc.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent event) {
-                        if (SwingUtilities.isRightMouseButton(event))
-                        {
-                            super.mouseClicked(event);
-                            setBackground(Color.CYAN);
-                            modeleGrille.updtateGrille((event.getComponent().getX()-7)/28, (event.getComponent().getY()-7)/25);
-                        }
-                    }
-                });
-                vc.setBorder(blackline);
-                vc.setSize(30, 30);
-                pan.add(vc);  
+                if(modeleGrille.getTabCases()[i][j].isDrapeau() == 1){
+                    tabCases[i][j].setBackground(Color.green);
+                }
             }
-        }
-        
-        
+        }  
         pan.setBorder(blackline);
         add(pan);
     }
