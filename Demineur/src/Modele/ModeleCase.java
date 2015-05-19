@@ -12,6 +12,15 @@ package Modele;
 public class ModeleCase {
     
     private int drapeau;
+    private int mine;
+    
+    public int hasMine() {
+        return mine;
+    }
+    
+    public void setMine(int mine) {
+        this.mine = mine;
+    }
 
     public int isDrapeau() {
         return drapeau;

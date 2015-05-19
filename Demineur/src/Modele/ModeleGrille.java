@@ -5,7 +5,9 @@
  */
 package Modele;
 
+import static java.lang.Math.ceil;
 import java.util.Observable;
+import java.util.Random;
 
 /**
  *
@@ -16,7 +18,8 @@ public class ModeleGrille extends Observable{
     private ModeleCase[][] tabCases;
     private int nbColonne = 15;
     private int nbLigne = 15;
-
+    private int nbMine = (int) ceil((nbColonne*nbLigne)/3);
+    
     public int getNbColonne() {
         return nbColonne;
     }
@@ -50,6 +53,7 @@ public class ModeleGrille extends Observable{
             {
                 tabCases[i][j] = new ModeleCase();
                 tabCases[i][j].setDrapeau(0);
+                tabCases[i][j].setMine(0);
             }
         }
     }
@@ -71,4 +75,28 @@ public class ModeleGrille extends Observable{
         }
     }
     
+    public void remplirMine()
+    {        
+        while(nbMine > 0)
+        {
+            int[] coord = genererAleatoire();
+            
+            if(tabCases[coord[0]][coord[1]].hasMine() == 0)
+            {
+                tabCases[coord[0]][coord[1]].setMine(1);
+                nbMine--;
+            }
+        }
+    }
+    
+    public int[] genererAleatoire()
+    {
+        Random r = new Random();
+        int x = r.nextInt(nbColonne + 1);
+        int y = r.nextInt(nbLigne + 1);
+        
+        int[] tabAleatoire = new int[]{x, y};
+        
+        return tabAleatoire;
+    }
 }
