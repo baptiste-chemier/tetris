@@ -20,8 +20,8 @@ public class Demineur {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        //VueVue fenetre = new VueVue();
-        Vue fenetre = new Vue();
+  VueVue fenetre = new VueVue();
+//        Vue fenetre = new Vue();
         fenetre.setVisible(true);//On la rend visible
     }
     

@@ -35,7 +35,7 @@ import javax.swing.border.Border;
 public class VueVue extends JFrame  implements Observer {
 
     ModeleGrille modeleGrille;
-    JComponent pan, infos,princ;
+    JComponent pan;
     Border blackline;
     private JPanel[][] tabCases;
     
@@ -62,26 +62,16 @@ public class VueVue extends JFrame  implements Observer {
         JMenuItem mi = new JMenuItem("Partie");
         modeleGrille = new ModeleGrille();
         tabCases = new JPanel[15][15];
-        infos = new JPanel();
-        princ = new JPanel();
         
-        BorderLayout bl = new BorderLayout(2,2);
-        infos.setLayout(bl);
-        princ.setLayout(bl);
         
         m.add(mi);   
         jm.add(m);
         setJMenuBar(jm);
         
         setTitle("Ma première fenêtre");
-        setSize(900, 900);
+        setSize(450, 450);
         pan = new JPanel (new GridLayout(modeleGrille.getNbLigne(), modeleGrille.getNbColonne()));
-        pan.setSize(100,100);
-        blackline = BorderFactory.createLineBorder(Color.black,1);
-        infos = new JPanel ();
-        infos.setSize(600,600);
-        
-        add(princ);
+        blackline = BorderFactory.createLineBorder(Color.black,1);  
     }
     
     public void build() {
@@ -106,6 +96,11 @@ public class VueVue extends JFrame  implements Observer {
                             modeleGrille.updtateGrille((event.getComponent().getY()-7)/25,(event.getComponent().getX()-7)/28);
                             
                         }
+                        if (SwingUtilities.isLeftMouseButton(event)) {
+                            super.mouseClicked(event);
+                            modeleGrille.calcGrille((event.getComponent().getX() - 7) / 28,(event.getComponent().getY() - 7) / 25);
+
+                        }
                     }
                 });
                 vc.setBorder(blackline);
@@ -116,8 +111,7 @@ public class VueVue extends JFrame  implements Observer {
         }
         pan.setBorder(blackline);
         
-        princ.add(pan);
-        princ.add(infos);
+        add(pan);
 
     }
 

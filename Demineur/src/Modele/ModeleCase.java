@@ -13,6 +13,16 @@ public class ModeleCase {
     
     private int drapeau;
     private int mine;
+    private int isReturn;
+    
+    
+    public int isReturn(){
+        return isReturn;
+    }
+    
+    public void setReturn(int isReturn){
+        this.isReturn = isReturn;
+    }
     
     public int hasMine() {
         return mine;
