@@ -14,6 +14,7 @@ public class ModeleCase {
     private int drapeau;
     private int mine;
     private int isReturn;
+    private int id;
     
     
     public int isReturn(){
@@ -40,8 +41,13 @@ public class ModeleCase {
         this.drapeau = drapeau;
     }    
     
-    public ModeleCase()
+    public ModeleCase(int id)
     {
-        
+        this.id = id;
+    }
+    public ModeleCase(){
+        setDrapeau(0);
+        setMine(0);
+        setReturn(0);
     }
 }

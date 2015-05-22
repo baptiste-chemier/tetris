@@ -14,6 +14,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.BorderFactory;
@@ -36,7 +37,7 @@ public class VueVue extends JFrame  implements Observer {
     private ModeleGrille modeleGrille;
     private JComponent pan, infos, principal;
     private Border blackline;
-    private JPanel[][] tabCases;
+    private ArrayList<VueCase> tabCases;
     private JLabel nombreDeMines;
     
     public VueVue() {
@@ -53,6 +54,7 @@ public class VueVue extends JFrame  implements Observer {
         });
 
         modeleGrille.addObserver(this);
+        System.out.print("" + modeleGrille.countObservers());
     }
     
     public void initComponent()
@@ -62,7 +64,7 @@ public class VueVue extends JFrame  implements Observer {
         JMenu m = new JMenu("Jeu");
         JMenuItem mi = new JMenuItem("Partie");
         modeleGrille = new ModeleGrille();
-        tabCases = new JPanel[15][15];
+        tabCases =  new ArrayList<>();
         infos = new JPanel();
         m.add(mi);   
         jm.add(m);
@@ -83,58 +85,34 @@ public class VueVue extends JFrame  implements Observer {
     }
     
     public void build() {
-
-        for(int i = 0; i < modeleGrille.getNbLigne() ;i++){
-            for(int j = 0; j < modeleGrille.getNbColonne(); j++)
-            {
-               JPanel vc = new JPanel();
-               if(modeleGrille.getTabCases()[i][j].hasMine() == 1){
-                   vc.setBackground(Color.red);
-               }else{
-                   vc.setBackground(Color.white);
-               }
-               
-
-               vc.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent event) {
-                        if (SwingUtilities.isRightMouseButton(event))
-                        {
-                            super.mouseClicked(event);
-                            modeleGrille.updtateGrille((event.getComponent().getY()-7)/25,(event.getComponent().getX()-7)/28);
-                            
-                        }
-                        if (SwingUtilities.isLeftMouseButton(event)) {
-                            super.mouseClicked(event);
-                            modeleGrille.calcGrille((event.getComponent().getX() - 7) / 28, (event.getComponent().getY() - 7) / 25);
-
-                        }
-                    }
-                });
-                vc.setBorder(blackline);
-                vc.setSize(30, 30);
-                pan.add(vc);  
-                tabCases[i][j] = vc;
+        for(int i = 0;i< modeleGrille.getNbLigne()*modeleGrille.getNbColonne();i++){
+            VueCase maCase = new VueCase(i,modeleGrille);            
+            if (modeleGrille.getCase(i).hasMine() == 1) {
+                maCase.setBackground(Color.red);
+            } else {
+                maCase.setBackground(Color.white);
             }
+            
+            maCase.setBorder(blackline);
+            pan.add(maCase);
+            tabCases.add(i, maCase);
+            pan.setBorder(blackline);
+            infos.setBorder(blackline);
         }
-        pan.setBorder(blackline);
-        infos.setBorder(blackline);
     }
 
     @Override
     public void update(Observable o, Object o1) {
         
-        for(int i = 0; i < modeleGrille.getNbLigne() ;i++){
-            for(int j = 0; j < modeleGrille.getNbColonne(); j++)
-            {
-                if(modeleGrille.getTabCases()[i][j].isDrapeau() == 1){
-                    tabCases[i][j].setBackground(Color.green);
-                }
+        for(int i = 0; i<modeleGrille.getNbColonne() * modeleGrille.getNbLigne(); i++){
+            if(modeleGrille.getCase(i).isDrapeau() == 1){
+                tabCases.get(i).setBackground(Color.green);
             }
-        }  
+        }
         
         nombreDeMines.setText(modeleGrille.getNbMine()+"");
         pan.setBorder(blackline);
         add(pan);
+        repaint();
     }
 }

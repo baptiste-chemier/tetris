@@ -5,7 +5,9 @@
  */
 package Modele;
 
+import Vue.VueCase;
 import static java.lang.Math.ceil;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
 
@@ -15,7 +17,8 @@ import java.util.Random;
  */
 public class ModeleGrille extends Observable{
     
-    private ModeleCase[][] tabCases;
+    //private ModeleCase[][] tabCases;
+    private ArrayList<ModeleCase> tabCases;
     private int nbColonne = 15;
     private int nbLigne = 15;
     private int nbMine = (int) ceil((nbColonne*nbLigne)/3);
@@ -43,52 +46,38 @@ public class ModeleGrille extends Observable{
     public void setNbLigne(int nbLigne) {
         this.nbLigne = nbLigne;
     }
-
-    public ModeleCase[][] getTabCases() {
-        return tabCases;
-    }
-
-    public void setTabCases(ModeleCase[][] tabCases) {
-        this.tabCases = tabCases;
-    }
-
-    public ModeleGrille() {
-        tabCases = new ModeleCase[nbLigne][nbColonne];
-        
-        for(int i = 0; i <= nbLigne - 1; i++)
-        {
-            for(int j = 0; j <= nbColonne - 1; j++)
-            {
-                tabCases[i][j] = new ModeleCase();
-                tabCases[i][j].setDrapeau(0);
-                tabCases[i][j].setMine(0);
-            }
-        }
-        remplirMine();
-        afficheTestGrille();
+    
+    public ModeleCase getCase(int i){
+        return tabCases.get(i);
     }
     
-    public void updtateGrille(int x, int y)
-    {
-        tabCases[x][y].setDrapeau(1);
+    public ModeleGrille() {
+        tabCases = new ArrayList<>();
+        for(int i = 0; i< nbLigne * nbColonne;i++){
+            ModeleCase m = new ModeleCase(i);
+            tabCases.add(i, m);
+        }
+        remplirMine();
         
-        if(tabCases[x][y].hasMine() == 1){
+    }
+    
+    public void updtateGrille(int id)
+    {
+        getCase(id).setDrapeau(1);
+        if(getCase(id).hasMine() == 1){
             nbMine--;
             if(nbMine == 0){
                 finPartie();
             }
         }
-
         setChanged();
         notifyObservers();
+        System.out.println(this.countObservers());
     }
     
     public void afficheTestGrille(){
-        for(int i=0;i<nbColonne;i++){
-            for(int j=0;j<nbLigne;j++){
-                System.out.print(tabCases[i][j].hasMine());
-            }
-            System.out.println("\n");
+        for(int i = 0; i<nbColonne*nbLigne;i++){
+            System.out.print(getCase(i).hasMine());
         }
     }
     
@@ -97,25 +86,21 @@ public class ModeleGrille extends Observable{
         int nbMineRemplissage = nbMine;
         while(nbMineRemplissage > 0)
         {
-            int[] coord = genererAleatoire();
+            int id = genererAleatoire();
             
-            if(tabCases[coord[0]][coord[1]].hasMine() == 0)
+            if(getCase(id).hasMine() == 0)
             {
-                tabCases[coord[0]][coord[1]].setMine(1);
+                getCase(id).setMine(1);
                 nbMineRemplissage--;
             }
         }
     }
     
-    public int[] genererAleatoire()
+    public int genererAleatoire()
     {
         Random r = new Random();
-        int x = r.nextInt(nbColonne );
-        int y = r.nextInt(nbLigne );
-        
-        int[] tabAleatoire = new int[]{x, y};
-        
-        return tabAleatoire;
+        int id = r.nextInt((nbColonne * nbLigne));
+        return id;
     }
 
     private void finPartie() {
@@ -124,24 +109,12 @@ public class ModeleGrille extends Observable{
     
     public void calcGrille(int x, int y){
         int nbMinesVoisine;
-        if(tabCases[x][y].isReturn()== 0){
-            tabCases[x][y].setReturn(1);
-            nbMinesVoisine = getNbVoisin(x, y);
-            System.out.println(nbMinesVoisine);
-        }
+
     }
+    
     public int getNbVoisin(int x,int y){
         int nbMinesVoisine = 0;
         
-        for(int i=x-1;i<=x+1;i++){
-            //for(int j=y-1;j<=y+1;j++){
-            System.out.println("x: "+i+", Y: "+y);
-            System.out.println("Mine ?:"+tabCases[i][y].hasMine());
-                if(i>=0 && i<this.nbMine && y>=0 && y<this.nbColonne){
-                    if(tabCases[i][y].hasMine() == 1) nbMinesVoisine++;
-                }
-            //}
-        }
 
         return nbMinesVoisine;
     }
