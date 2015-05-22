@@ -72,7 +72,6 @@ public class ModeleGrille extends Observable{
         }
         setChanged();
         notifyObservers();
-        System.out.println(this.countObservers());
     }
     
     public void afficheTestGrille(){
@@ -107,16 +106,57 @@ public class ModeleGrille extends Observable{
         System.out.println("GAGNE");
     }
     
-    public void calcGrille(int x, int y){
-        int nbMinesVoisine;
+    public void calcGrille(int id){
+        
+        propagVoisin(tabCases.get(id));
 
     }
     
-    public int getNbVoisin(int x,int y){
-        int nbMinesVoisine = 0;
-        
+    public void propagVoisin(ModeleCase caseCourante){
+        if(caseCourante.isReturn() == 1 && caseCourante.hasMine() == 1)return;
+        ArrayList<ModeleCase> nbVoisinsPiege = getNbVoisinPieges(caseCourante.getId());
+        caseCourante.setReturn(1);
+        if(getNbVoisinPieges(caseCourante.getId()).isEmpty()){
+            for(int i = 0; i< nbVoisinsPiege.size();i++){
+                if(nbVoisinsPiege.get(i).isReturn() == 0){
+                    propagVoisin(nbVoisinsPiege.get(i));
+                }
+            }
+        }
+    }
+    
+    public ArrayList<ModeleCase> getNbVoisinPieges(int id){
+        ArrayList<ModeleCase> nbVoisins;
+        ArrayList<ModeleCase> voisinPieges = new ArrayList<>();
+        nbVoisins = getNbVoisin(id);
 
-        return nbMinesVoisine;
+        for (int i = 0; i < nbVoisins.size(); i++) {
+            if (nbVoisins.get(i).hasMine() == 1) {
+               voisinPieges.add(i, nbVoisins.get(i));
+            }
+        }
+        return voisinPieges;
+    }
+    
+    public ArrayList<ModeleCase> getNbVoisin(int id){
+        boolean gauche = false, droite = false, haut = false, bas = false;
+        ArrayList<ModeleCase> nbCase = new ArrayList<>();
+        
+        if(id%(nbLigne) == 0)gauche=true;
+        if(id%(nbLigne) == (nbLigne-1)) droite = true;
+        if(id/(nbLigne) == 0) haut = true;
+        if(id/(nbLigne) == (nbColonne-1)) bas = true;
+        
+        if(!gauche) 
+            nbCase.add(getCase(id-1));
+        if(!droite) 
+            nbCase.add(getCase(id+1));
+        if(!haut) 
+            nbCase.add(getCase(id-nbLigne));
+        if(!bas) 
+            nbCase.add(getCase(id+nbLigne));
+       
+        return nbCase;
     }
     
 }

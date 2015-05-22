@@ -45,7 +45,7 @@ public class VueCase extends JPanel implements Observer {
 
         }
         if (SwingUtilities.isLeftMouseButton(event)) {
-            m.calcGrille(id, id);
+            m.calcGrille(id);
 
         }
     }

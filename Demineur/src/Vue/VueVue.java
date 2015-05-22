@@ -54,7 +54,7 @@ public class VueVue extends JFrame  implements Observer {
         });
 
         modeleGrille.addObserver(this);
-        System.out.print("" + modeleGrille.countObservers());
+
     }
     
     public void initComponent()

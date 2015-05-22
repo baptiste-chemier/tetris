@@ -15,6 +15,10 @@ public class ModeleCase {
     private int mine;
     private int isReturn;
     private int id;
+
+    public int getId() {
+        return id;
+    }
     
     
     public int isReturn(){
