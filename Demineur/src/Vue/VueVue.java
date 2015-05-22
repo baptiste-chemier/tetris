@@ -42,6 +42,9 @@ public class VueVue extends JFrame  implements Observer {
     
     public VueVue() {
         super();
+        
+        tabCases =  new ArrayList<>();
+        modeleGrille = new ModeleGrille();
         initComponent();
         build();
         
@@ -62,9 +65,7 @@ public class VueVue extends JFrame  implements Observer {
         principal = new JPanel();
         JMenuBar jm = new JMenuBar();
         JMenu m = new JMenu("Jeu");
-        JMenuItem mi = new JMenuItem("Partie");
-        modeleGrille = new ModeleGrille();
-        tabCases =  new ArrayList<>();
+        JMenuItem mi = new JMenuItem("Partie");        
         infos = new JPanel();
         m.add(mi);   
         jm.add(m);
@@ -103,16 +104,18 @@ public class VueVue extends JFrame  implements Observer {
 
     @Override
     public void update(Observable o, Object o1) {
-        
+
+
         for(int i = 0; i<modeleGrille.getNbColonne() * modeleGrille.getNbLigne(); i++){
             if(modeleGrille.getCase(i).isDrapeau() == 1){
                 tabCases.get(i).setBackground(Color.green);
             }
+            
         }
         
         nombreDeMines.setText(modeleGrille.getNbMine()+"");
         pan.setBorder(blackline);
         add(pan);
-        repaint();
+        
     }
 }

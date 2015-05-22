@@ -116,13 +116,14 @@ public class ModeleGrille extends Observable{
         if(caseCourante.isReturn() == 1 && caseCourante.hasMine() == 1)return;
         ArrayList<ModeleCase> nbVoisinsPiege = getNbVoisinPieges(caseCourante.getId());
         caseCourante.setReturn(1);
-        if(getNbVoisinPieges(caseCourante.getId()).isEmpty()){
+        if(getNbVoisinPieges(caseCourante.getId()).isEmpty())
             for(int i = 0; i< nbVoisinsPiege.size();i++){
                 if(nbVoisinsPiege.get(i).isReturn() == 0){
+                    
                     propagVoisin(nbVoisinsPiege.get(i));
                 }
             }
-        }
+        
     }
     
     public ArrayList<ModeleCase> getNbVoisinPieges(int id){
@@ -132,7 +133,7 @@ public class ModeleGrille extends Observable{
 
         for (int i = 0; i < nbVoisins.size(); i++) {
             if (nbVoisins.get(i).hasMine() == 1) {
-               voisinPieges.add(i, nbVoisins.get(i));
+               voisinPieges.add(nbVoisins.get(i));
             }
         }
         return voisinPieges;

@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -23,12 +24,15 @@ public class VueCase extends JPanel implements Observer {
     
     private int id;
     private ModeleGrille m;
+    private JLabel label;
     
     public VueCase(int i, ModeleGrille modele) {
         
         id = i;
         m = modele;
-        
+        label = new JLabel();
+        label.setText(m.getNbVoisinPieges(id).size()+"");
+        this.add(label);
         this.setPreferredSize(new Dimension(30,30));
         this.addMouseListener(new MouseAdapter() {
             @Override
@@ -52,7 +56,7 @@ public class VueCase extends JPanel implements Observer {
 
     @Override
     public void update(Observable o, Object o1) {
-        this.setBackground(Color.yellow);
+        
     }
     
 }
